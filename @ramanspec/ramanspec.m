@@ -1,5 +1,4 @@
 classdef ramanspec
-    %This Line is simply to test out GIT
     
     properties (GetAccess = 'public', SetAccess = 'public')
         samplename
