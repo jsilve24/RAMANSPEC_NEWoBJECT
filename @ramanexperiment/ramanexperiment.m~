@@ -1,0 +1,101 @@
+classdef ramanexperiment
+    
+    properties
+        ExperimentID
+        Notes
+        ContainedSamples
+    end %End Properties
+    
+    methods
+        function exp = ramanexperiment(ExperimentID)
+        %RAMANEXPERIMENT RamanExperiment class constructor. 
+        % spec = ramanexperiment('ExperimentID') creates ramanspec
+        % object from double data, 
+
+            if nargin == 0
+                exp.ExperimentID=[];
+                exp.Notes=[];
+                exp.ContainedSamples = [];
+            % elseif nargin == 1
+            elseif isa(ExperimentID,'ramanexperiment')
+                exp = ExperimentID;
+            else
+                exp.ExperimentID = ExperimentID;
+                exp.Notes = [];
+                exp.ContainedSamples = [];
+            end
+        end
+        
+        function display(exp)
+            % RAMANEXP/DISPLAY Command window display of ramanspec data
+
+            disp('');
+            disp([inputname(1),' = ']);
+            disp('');           
+            get(exp)
+            disp('');
+        end
+    end %End Methods
+    methods 
+        function val = get(exp,varargin)
+             propName = varargin;
+         if length(varargin) == 1  
+            switch char(propName)
+                case 'ExperimentID'
+                    val = exp.ExperimentID;
+                case 'Notes'
+                    val = exp.Notes;
+                case 'ContainedSampleIDs'
+                    val = exp.ContainedSampleIDs;
+                case 'ContainedSamples'
+%                     for i = 1:length(exp.ContainedSamples)
+%                         
+%                     end
+                otherwise
+                    error('Not a valid Property Name')
+            end %switch
+         elseif isempty(varargin)
+            Properties = [];
+            PropNames = {'ExperimentID','Notes','ContainedSampleIDs'};
+            
+            Properties{1} = exp.ExperimentID;
+
+            Properties{2} = exp.Notes;
+
+%             Properties{2} = exp.ContainedSamples;
+            for i = 1:numel(exp.ContainedSamples)
+                speci = exp.containedSamples{i};
+                names(i) =[names ' ' char(speci.SampleID)];
+            end %end for    
+
+            fprintf([PropNames{1} ': \t' char(Properties{1}) '\n']);           
+            fprintf([PropNames{2} ': \t' char(Properties{2}) '\n']);           
+            fprintf([PropNames{3} ': \t' ]);
+            
+         end %if
+        end %get function
+        
+        function exp = set(exp,varargin)
+            propertyArgIn = varargin;
+            while length(propertyArgIn) >=2
+                prop = propertyArgIn{1};
+                val = propertyArgIn{2};
+                propertyArgIn = propertyArgIn(3:end);
+                
+                switch prop
+                    case 'ExperimentID'
+                        exp.ExperimentID = val;
+                    case 'Notes'
+                        exp.Notes = val;
+                    case 'ContainedSampleIDs'
+                        exp.ContainedSampleIDs = val;
+                    case 'ContainedSamples'
+                        exp.ContainedSamples = val;                
+                    otherwise
+                        error('Not a valid Property Name')
+            end %while loop
+        end %set function
+    end %set function
+    end %End Get/Set Methods
+
+end %End Classdef
