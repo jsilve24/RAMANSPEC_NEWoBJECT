@@ -34,6 +34,7 @@ classdef ramanspec
                 spec = data;
             else
                 [length width] = size(data);
+                % TODO: Need to fix this to handle Object Arrays
                 if width ~= 2
                     disp('Only input a single spectra with Column 1 =Wavenumbers Column 2 = RI')
                     return
